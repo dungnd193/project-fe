@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-12">
+    <p-toast></p-toast>
+    <div class="card">
+      <p-table #userTable [value]="orders" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['phone', 'id', 'user_name', 'email']" responsiveLayout="scroll" [rowHover]="true"
+        dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="management-user">
+            <h5 class="management-user__text">Quản lý đơn hàng</h5>
+            <div>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" placeholder="Tìm kiếm theo tên, số điện thoại, mã đơn hàng, email"
+                  (input)="handleFilterBlobal($event)" class="search-input" />
+              </span>
+              <button pButton pRipple label="Xuất excel" icon="pi pi-upload" class="p-button-help" (click)="handleExportToExcel()"></button>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="id" style="width: 150px; text-align: center">
+              Mã đơn hàng
+            </th>
+            <th pSortableColumn="user_name" style="text-align: center">
+              Tên khách hàng
+            </th>
+            <th style="width: 200px; text-align: center">Địa chỉ</th>
+            <th pSortableColumn="email" style="width: 150px">Email</th>
+            <th style="width: 150px; text-align: center" pSortableColumn="phone">
+              Số điện thoại
+            </th>
+            <th>Thông tin đặt hàng</th>
+            <th pSortableColumn="price" style="width: 150px; text-align: center">
+              Giá <p-sortIcon field="price"></p-sortIcon>
+            </th>
+            <th style="width: 150px; text-align: center">Trạng thái giao hàng</th>
+            <th style="width: 160px">Phương thức thanh toán</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+          <tr class="user-item">
+            <td class="user-item__id">{{ order.id }}</td>
+            <td class="user-item__name">
+              {{ order.user_name }}
+            </td>
+            <td class="user-item__price">
+              {{ order.address }}
+            </td>
+            <td class="user-item__category">{{ order.email }}</td>
+            <td class="user-item__phone" style="text-align: center">
+              {{ order.phone }}
+            </td>
+            <td>
+              <ng-container *ngFor="let order_item of order.order_list">
+                <h4>
+                  - {{ order_item.name }}
+                  <br />
+                  <strong>Color:{{ " " }}</strong>{{ handleConvertColor(order_item.colorId) }} ---
+                  <strong>Size:{{ " " }}</strong>{{ handleConvertSize(order_item.sizeId) }}
+                  <br />
+                  <strong>Quantity:{{ " " }}</strong>{{ order_item.quantity }}
+                </h4>
+              </ng-container>
+            </td>
+            <td class="user-item__price" style="text-align: center">
+              <span [class.line_through]="order.discount">
+                {{ handleTotalPrice(order.order_list) | currency : "VND" }}
+              </span>
+              <span *ngIf="order.discount">
+                {{
+                handleTotalPrice(order.order_list) * order.discount
+                | currency : "VND"
+                }}
+              </span>
+            </td>
+            <td>
+              <p-dropdown inputId="orderStatus" placeholder="Select" [options]="statuses" [(ngModel)]="order.status"
+                (onChange)="handleChangeOrderStatus($event, order.id)" appendTo="body">
+                <ng-template let-option pTemplate="item">
+                  <span [class]="'user-badge status-' + option.value.toLowerCase()">
+                    {{ option.label }}
+                  </span>
+                </ng-template>
+              </p-dropdown>
+            </td>
+            <td class="user-item__payment" style="text-align: center">
+              <span [class]="
+                  'user-badge method-' + order.payment_method.toLowerCase()
+                ">
+                {{ order.payment_method.replace("-", " ") }}
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            In total there are {{ orders ? orders.length : 0 }} orders.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

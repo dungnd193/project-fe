@@ -1,0 +1,412 @@
+<div class="row">
+  <div class="col-12">
+    <p-toast></p-toast>
+    <div class="card">
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <button
+            pButton
+            pRipple
+            label="Thêm sản phẩm"
+            icon="pi pi-plus"
+            class="p-button-success mr-2"
+            (click)="handleOpenAddProductDialog()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-danger delete-selected-products"
+            (click)="deleteSelectedProducts()"
+            [disabled]="!selectedProducts || !selectedProducts.length"
+          ></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <!-- <button
+            pButton
+            pRipple
+            label="Xuất excel"
+            icon="pi pi-upload"
+            class="p-button-help"
+          ></button> -->
+        </ng-template>
+      </p-toolbar>
+
+      <p-table
+        #productTable
+        [value]="products"
+        [rows]="10"
+        [globalFilterFields]="[
+          'name',
+          'country.name',
+          'representative.name',
+          'status'
+        ]"
+        responsiveLayout="scroll"
+        [(selection)]="selectedProducts"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+      >
+        <ng-template pTemplate="caption">
+          <div class="management-product">
+            <h5 class="management-product__text">Quản lý danh sách sản phẩm</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                placeholder="Tìm kiếm theo tên..."
+                (input)="handleFilterBlobal($event)"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="name">
+              Tên <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th>Ảnh</th>
+            <th pSortableColumn="price">
+              Giá <p-sortIcon field="price"></p-sortIcon>
+            </th>
+            <th pSortableColumn="category.name">
+              Danh mục <p-sortIcon field="categoryDto.name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="status">
+              Trạng thái <p-sortIcon field="status"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr class="product-item">
+            <td>
+              <p-tableCheckbox [value]="product"></p-tableCheckbox>
+            </td>
+            <td class="product-item__name">{{ product.name }}</td>
+            <td>
+              <img
+                [src]="
+                  'http://localhost:8080/images/product-images/' + product.nameUrlImage[0]
+                "
+                [alt]="product.name"
+                width="100"
+                class="product-item__img"
+              />
+            </td>
+            <td class="product-item__price">
+              {{ product.price | currency: "VND" }}
+            </td>
+            <td
+              class="product-item__category"
+              style="text-transform: capitalize"
+            >
+              {{ product.category.name }}
+            </td>
+            <td>
+              <span
+                [class]="'product-badge status-' + product.status.toLowerCase()"
+              >
+                {{ product.status.replaceAll("_", " ") }}
+              </span>
+            </td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-success product-item__edit"
+                (click)="handleOpenEditProductDialog(product)"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-warning product-item__delete"
+                (click)="deleteProduct(product)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            Tổng cộng có {{ products ? products.length : 0 }} sản phẩm.
+          </div>
+        </ng-template>
+      </p-table>
+      <p-paginator
+        [rows]="6"
+        [totalRecords]="totalProducts"
+        (onPageChange)="paginate($event)"
+      ></p-paginator>
+    </div>
+
+    <p-dialog
+      [(visible)]="productDialog"
+      [style]="{ width: '80vw' }"
+      header="Thông tin chi tiết sản phẩm"
+      [modal]="true"
+      styleClass="p-fluid"
+    >
+      <ng-template pTemplate="content">
+        <div class="row" *ngIf="productImg.length">
+          <div class="col-12">
+            <div class="flex overflow-x-scroll">
+              <div class="product-image-list">
+                <div class="product-image" *ngFor="let imgPath of productImg">
+                  <img [src]="'http://localhost:8080/images/product-images/' + imgPath" />
+                  <i
+                    class="pi pi-times"
+                    (click)="handleDeleteProductImage(imgPath)"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label class="label-text" for="name">Mã sản phẩm</label>
+            <input
+              type="text"
+              pInputText
+              id="id"
+              required
+              autofocus
+              autocomplete="off"
+              [(ngModel)]="product.code"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label class="label-text" for="name">Tên sản phẩm</label>
+            <input
+              type="text"
+              pInputText
+              id="name"
+              required
+              autocomplete="off"
+              [(ngModel)]="product.name"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label class="label-text" for="name">Hình ảnh sản phẩm</label>
+            <!-- <div>
+              <label class="label-text" style="font-weight: 300" for="name"
+                >Choose Product Color</label
+              >
+
+              <p-dropdown
+                placeholder="Select Color"
+                [options]="colorListOfProduct"
+                optionLabel="name"
+                [(ngModel)]="colorUploadImg"
+              >
+                <ng-template let-item pTemplate="item">
+                  <span>
+                    {{ item.name }}
+                  </span>
+                </ng-template>
+              </p-dropdown>
+            </div> -->
+            <p-fileUpload
+              name="demo[]"
+              (onSelect)="handleUploadImg($event, $event, $event)"
+              (onRemove)="handleRemoveImg($event, $event)"
+              [multiple]="true"
+              accept="image/*"
+              [maxFileSize]="3000000"
+            >
+              <ng-template pTemplate="content">
+                <ul *ngIf="uploadedFiles.length">
+                  <li *ngFor="let file of uploadedFiles">
+                    {{ file.name }} - {{ file.size }} bytes
+                  </li>
+                </ul>
+              </ng-template>
+            </p-fileUpload>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label class="label-text mb-3">Danh mục</label>
+
+            <mat-radio-group
+              [value]="product.category?.id"
+              (change)="handleChangeCategory($event)"
+              name="categories"
+            >
+              <div class="formgrid grid">
+                <ng-container *ngFor="let category of categories">
+                  <div class="field-radiobutton col-3">
+                    <div class="category-item__wrapper">
+                      <mat-radio-button
+                        color="primary"
+                        [value]="category"
+                        [checked]="product.category?.id === category.id"
+                      >
+                        {{ category.name }}
+                      </mat-radio-button>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </mat-radio-group>
+            <!-- <p-treeSelect  [options]="nodes1" placeholder="Select Item"></p-treeSelect> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <ng-container *ngFor="let item of detailRow">
+              <div class="row">
+                <div class="col-4">
+                  <label class="label-text">Màu sắc</label>
+                  <p-dropdown
+                    placeholder="Select color"
+                    [options]="colors"
+                    [(ngModel)]="item.color"
+                    optionLabel="name"
+                  >
+                    <ng-template let-color pTemplate="item">
+                      <span>
+                        {{ color.name }}
+                      </span>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+                <div class="col-4">
+                  <label class="label-text">Kích cỡ</label>
+                  <p-dropdown
+                    placeholder="Select size"
+                    [options]="sizes"
+                    [(ngModel)]="item.size"
+                    optionLabel="name"
+                  >
+                    <ng-template let-size pTemplate="item">
+                      <span>
+                        {{ size.name }}
+                      </span>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+                <div class="col-3">
+                  <div class="product-item__quantity">
+                    <label class="label-text" for="quantity">Số lượng</label>
+                    <p-inputNumber
+                      id="quantity"
+                      [(ngModel)]="item.quantity"
+                    ></p-inputNumber>
+                  </div>
+                </div>
+                <div class="col-1">
+                  <div class="times">
+                    <button
+                      pButton
+                      pRipple
+                      type="button"
+                      icon="pi pi-times"
+                      class="p-button-rounded p-button-secondary"
+                      (click)="handleDeleteColorAndSize(item)"
+                      style="color: #333"
+                    ></button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-plus"
+              class="p-button-rounded p-button-secondary"
+              style="color: #333"
+              (click)="handleAddColorAndSize()"
+            ></button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label class="label-text" for="description">Mô tả sản phẩm</label>
+            <textarea
+              id="description"
+              pInputTextarea
+              required
+              rows="3"
+              cols="20"
+              [(ngModel)]="product.description"
+            ></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="product-item__price">
+              <label class="label-text" for="price">Giá bán</label>
+              <p-inputNumber
+                id="price"
+                mode="currency"
+                currency="VND"
+                locale="en-US"
+                [(ngModel)]="product.price"
+              ></p-inputNumber>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="product-item__price">
+              <label class="label-text" for="discount">Giảm giá (%)</label>
+              <p-inputNumber
+                id="discount"
+                suffix="%"
+                [(ngModel)]="product.discount"
+              ></p-inputNumber>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="product-item__price">
+              <label class="label-text" for="brand">Thương hiệu</label>
+              <input
+                type="text"
+                pInputText
+                id="brand"
+                required
+                autocomplete="off"
+                [(ngModel)]="product.brand"
+              />
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          label="Huỷ"
+          icon="pi pi-times"
+          class="p-button-text"
+          (click)="handleCloseDialog()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Lưu"
+          icon="pi pi-check"
+          class="p-button-text"
+          (click)="saveProduct()"
+        ></button>
+        <!-- (click)="saveProduct()" -->
+      </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+  </div>
+</div>

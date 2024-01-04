@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-12">
+    <div class="bar-chart">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <span class="text-head">
+            Từ {{handleDisplayDate(startDate)}} đến {{handleDisplayDate(endDate)}}
+          </span>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="single_quick_activity">
+            <h4>Tổng doanh số</h4>
+            <h3><span class="counter">{{ handleTotalIncome() | currency: "VND" }}</span></h3>
+            <!-- <p>Saved 25%</p> -->
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="single_quick_activity" style="background-color: #63c7ff">
+            <h4>Đơn hàng</h4>
+            <h3><span class="counter">{{ completedOrders.length }}</span></h3>
+            <!-- <p>Saved 25%</p> -->
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="single_quick_activity" style="background-color: #a66dd4">
+            <h4>Sản phẩm đã bán</h4>
+            <h3><span class="counter">{{ handleTotalSoldProduct() }}</span></h3>
+            <!-- <p>Saved 25%</p> -->
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="single_quick_activity" style="background-color: #6dd4b1">
+            <h4>Lợi nhuận</h4>
+            <h3><span class="counter">{{ handleTotalIncome() - calculateImportedCost() | currency: "VND"}}</span></h3>
+            <!-- <p>Saved 65%</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="bar-chart">
+      <div class="card flex justify-content-start mb-4">
+        <form [formGroup]="statisticForm">
+          <p-selectButton [options]="stateOptions" formControlName="value" optionLabel="label"
+            optionValue="value"></p-selectButton>
+        </form>
+      </div>
+      <div class="card flex justify-content-start mb-4">
+        <p-dropdown *ngIf="statisticForm.value.value === 'TK1'" class="select-product" [options]="products"
+          [(ngModel)]="selectedSoldProduct" optionLabel="name" placeholder="Select a Product"></p-dropdown>
+        <p-dropdown *ngIf="statisticForm.value.value === 'TK2'" class="select-product" [options]="products"
+          [(ngModel)]="selectedImportedProduct" optionLabel="name" placeholder="Select a Product"></p-dropdown>
+        <p-calendar class="start-date" [(ngModel)]="startDate" [maxDate]="maxDate"></p-calendar>
+        <p-calendar class="end-date" [(ngModel)]="endDate" [maxDate]="maxDate"></p-calendar>
+        <button pButton pRipple label="Thống kê" class="statisticize" (click)="handleStatistic()"></button>
+      </div>
+      <p-chart *ngIf="statisticForm.value.value === 'TK1'" type="bar" [data]="chartDataSold" [options]="options"
+        height="400"></p-chart>
+      <p-chart *ngIf="statisticForm.value.value === 'TK2'" type="bar" [data]="chartDataImport" [options]="options"
+        height="400"></p-chart>
+
+    </div>
+  </div>
+</div>

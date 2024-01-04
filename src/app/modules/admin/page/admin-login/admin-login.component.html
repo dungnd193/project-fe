@@ -1,0 +1,77 @@
+<div class="admin">
+  <h2 class="admin-title">Log In</h2>
+  <mat-card action="" class="admin-form-login">
+    <mat-card-title>Đăng nhập bằng tài khoản admin</mat-card-title>
+    <mat-card-content>
+      <form class="login-form" [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+        <mat-form-field class="login-form__field" appearance="outline">
+          <mat-label>Username hoặc địa chỉ Email</mat-label>
+          <input
+            type="email"
+            matInput
+            required
+            formControlName="username"
+            autocomplete="off"
+          />
+          <mat-error
+            *ngIf="formLogin.get('username')?.invalid
+          || formLogin.get('username')?.errors?.['required']
+          || formLogin.get('username')?.touched"
+          >
+            Username hoặc địa chỉ Email là <strong>bắt buộc</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-form__field" appearance="outline">
+          <mat-label>Mật khẩu</mat-label>
+          <input
+            [type]="!showPassword ? 'password' : 'text'"
+            matInput
+            required
+            formControlName="password"
+          />
+          <mat-icon matSuffix (click)="showPassword = !showPassword">
+            {{ showPassword ? "visibility_off" : "visibility" }}
+          </mat-icon>
+          <mat-error
+            *ngIf="formLogin.get('password')?.invalid
+          || formLogin.get('password')?.errors?.['required']
+          || formLogin.get('password')?.touched"
+          >
+            Mật khẩu is <strong>bắt buộc</strong>
+          </mat-error>
+        </mat-form-field>
+        <div class="login-form__action">
+          <mat-checkbox>Ghi nhớ đăng nhập</mat-checkbox>
+          <div class="login-form__button">
+            <button mat-raised-button color="accent" type="submit">
+              Đăng nhập
+            </button>
+          </div>
+        </div>
+      </form>
+      <p-divider>
+        <b>Hoặc</b>
+      </p-divider>
+      <div class="login-social">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Đăng nhập bằng Facebook"
+          class="p-button-raised"
+        >
+          <i class="pi pi-facebook"></i>
+        </button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Đăng nhập bằng Google"
+          class="p-button-raised p-button-danger"
+        >
+          <i class="pi pi-google"></i>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
