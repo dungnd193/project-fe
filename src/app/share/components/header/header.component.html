@@ -1,0 +1,42 @@
+<header
+  [style.display]="pathName === 'admin' ? 'none' : 'block'"
+  class="header"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 flex align-center" routerLink="/home">
+        <img src="assets/img/logo.png" alt="logo" class="logo-img" />
+      </div>
+      <div class="col-md-8 flex align-center justify-center">
+        <mat-selection-list #shoes [multiple]="false">
+          <mat-list-option
+            *ngFor="let page of pages"
+            [value]="page"
+            disableRipple
+            [routerLink]="page.toLowerCase()"
+            routerLinkActive="mat-list-single-selected-option"
+          >
+            {{ page }}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+      <div class="col-md-2 flex align-center">
+        <ng-container *ngIf="!isUserLoggedIn; else userMenuElse">
+          <mat-icon routerLink="user">person_outline</mat-icon>
+        </ng-container>
+        <ng-template #userMenuElse>
+          <p-menubar [model]="userMenu">
+          </p-menubar>
+        </ng-template>
+        <mat-icon
+          [matBadge]="cartProductsNumber"
+          matBadgeColor="accent"
+          matBadgeSize="small"
+          routerLink="cart"
+        >
+          shopping_cart
+        </mat-icon>
+      </div>
+    </div>
+  </div>
+</header>

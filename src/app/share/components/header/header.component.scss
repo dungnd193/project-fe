@@ -1,0 +1,84 @@
+.header {
+  padding: 30px 0;
+  border-bottom: 1px solid #dddddd;
+}
+.logo-img {
+  width: 100%;
+  cursor: pointer;
+}
+.mat-selection-list {
+  display: flex;
+}
+.mat-list-option:hover {
+  background-color: white;
+}
+:host ::ng-deep .mat-list-text {
+  padding: 0 !important;
+  text-align: center;
+}
+.mat-list-single-selected-option {
+  background-color: white;
+  font-weight: bold;
+  color: #ff4081;
+  border-bottom: 2px solid #ff4081;
+}
+.flex {
+  display: flex;
+}
+.align-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.mat-icon {
+  cursor: pointer;
+  margin-left: 14px;
+}
+:host ::ng-deep {
+  .p-menubar.p-component {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 30px;
+    background-color: white;
+    border: none;
+  }
+  .p-ripple.p-element.p-menuitem-link.ng-star-inserted {
+    padding: 0;
+  }
+  .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link {
+    padding: 0;
+  }
+  .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-submenu-icon {
+    margin: 0;
+  }
+  .p-menubar-root-list > .p-element.ng-star-inserted.p-menuitem{
+    padding: 0px;
+  }
+  .p-element.ng-star-inserted.p-menuitem{
+    padding: 8px;
+  }
+  .p-menubar .p-menuitem.p-menuitem-active > .p-menuitem-link {
+    background-color: white;
+  }
+  .p-submenu-icon.pi.pi-angle-down {
+    display: none;
+  }
+  .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover {
+    background-color: white;
+  }
+  .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:focus {
+    box-shadow: none;
+  }
+  .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-menuitem-icon {
+    color: black;
+    font-size: 24px
+  }
+  .p-menubar .p-menuitem-link .p-menuitem-text {
+    height: 20px;
+  }
+  // .mat-list-base .mat-list-item .mat-list-item-content-reverse, .mat-list-base .mat-list-option .mat-list-item-content-reverse {
+  //   width: 125px;
+  // }
+}
