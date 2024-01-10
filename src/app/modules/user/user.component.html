@@ -1,0 +1,119 @@
+<div class="container">
+    <div class="user-container">
+        <h2 class="user-basic-info">Thông tin cơ bản</h2>
+        <div class="user-group-info">
+            <h3 class="user-cate-text">Ảnh hồ sơ</h3>
+            <div class="user-avatar-group">
+                <h3>Ảnh hồ sơ giúp người khác nhận ra bạn</h3>
+                <div (click)="showDialog()">
+                    <img [src]="avatarPath || '../../../assets/img/avatar-default.jpg'" class="user-avt"/>
+                        
+                    <div class="SUOE7e"></div>
+                </div>
+            </div>
+        </div>
+        <div class="separated"></div>
+        <div class="user-group-info">
+            <h3 class="user-cate-text">Họ và tên</h3>
+            <div class="user-avatar-group">
+                <input type="text" pInputText [(ngModel)]="name" [disabled]="!isEditingName"
+                    [class.isEdittingTextfield]="isEditingName" />
+                <button *ngIf="!isEditingName" pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEditingName', value: true})"></button>
+                <button *ngIf="isEditingName" pButton pRipple type="button" icon="pi pi-check"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEditingName', value: false})"></button>
+            </div>
+        </div>
+        <div class="separated"></div>
+        <div class="user-group-info">
+            <h3 class="user-cate-text">Ngày sinh</h3>
+            <div class="user-avatar-group">
+                <p-calendar [(ngModel)]="dob" [disabled]="!isEditingDOB"
+                    [class.isEdittingDOB]="isEditingDOB"></p-calendar>
+                <button *ngIf="!isEditingDOB" pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEditingDOB', value: true})"></button>
+                <button *ngIf="isEditingDOB" pButton pRipple type="button" icon="pi pi-check"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEditingDOB', value: false})"></button>
+            </div>
+        </div>
+        <div class="separated"></div>
+        <div class="user-group-info">
+            <h3 class="user-cate-text">Giới tính</h3>
+            <div class="user-avatar-group">
+                <p-dropdown [(ngModel)]="gender" class="select-gender" [options]="genders" optionLabel="gender"
+                    placeholder="Select your gender" [disabled]="!isEditingGender"
+                    [class.isEdittingGender]="isEditingGender"></p-dropdown>
+                <button *ngIf="!isEditingGender" pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEditingGender', value: true})"></button>
+                <button *ngIf="isEditingGender" pButton pRipple type="button" icon="pi pi-check"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEditingGender', value: false})"></button>
+            </div>
+        </div>
+    </div>
+    <div class="user-container">
+        <h2 class="user-basic-info">Thông tin liên hệ</h2>
+        <div class="user-group-info">
+            <h3 class="user-cate-text">Số điện thoại</h3>
+            <div class="user-avatar-group">
+                <input type="text" pInputText [(ngModel)]="phoneNumber" [disabled]="!isEdittingPhoneNumber"
+                    [class.isEdittingTextfield]="isEdittingPhoneNumber" />
+                <button *ngIf="!isEdittingPhoneNumber" pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEdittingPhoneNumber', value: true})"></button>
+                <button *ngIf="isEdittingPhoneNumber" pButton pRipple type="button" icon="pi pi-check"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEdittingPhoneNumber', value: false})"></button>
+            </div>
+        </div>
+        <div class="separated"></div>
+        <div class="user-group-info">
+            <h3 class="user-cate-text">Email</h3>
+            <div class="user-avatar-group">
+                <input type="text" pInputText [(ngModel)]="email" [disabled]="!isEdittingEmail"
+                    [class.isEdittingTextfield]="isEdittingEmail" />
+                <button *ngIf="!isEdittingEmail" pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEdittingEmail', value: true})"></button>
+                <button *ngIf="isEdittingEmail" pButton pRipple type="button" icon="pi pi-check"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEdittingEmail', value: false})"></button>
+            </div>
+        </div>
+        <div class="separated"></div>
+        <div class="user-group-info">
+            <h3 class="user-cate-text">Địa chỉ</h3>
+            <div class="user-avatar-group">
+                <input type="text" pInputText [(ngModel)]="address" [disabled]="!isEdittingAddress"
+                    [class.isEdittingTextfield]="isEdittingAddress" />
+                <button *ngIf="!isEdittingAddress" pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEdittingAddress', value: true})"></button>
+                <button *ngIf="isEdittingAddress" pButton pRipple type="button" icon="pi pi-check"
+                    class="p-button-rounded p-button-text"
+                    (click)="isEditting({field: 'isEdittingAddress', value: false})"></button>
+            </div>
+        </div>
+        <div class="separated"></div>
+    </div>
+    <button class="update-button" (click)="handleUpdateUserInfo()">Update Information</button>
+</div>
+
+<p-dialog header="Ảnh hồ sơ" [(visible)]="visible" [modal]="true" [style]="{ width: '500px' }" [draggable]="false"
+    [resizable]="false">
+    <p class="m-0 mb-5">
+        Ảnh hồ sơ giúp người khác nhận ra bạn và cũng giúp bạn nhận biết được rằng mình đã đăng nhập vào tài khoản
+    </p>
+    <div class="separated"></div>
+    <div class="avatar-group mt-5">
+        <input type="file" #fileInput (change)="handleFileSelect($event)" style="display: none" />
+        <img [src]="selectedImage || avatarPath || '../../../assets/img/avatar-default.jpg'" class="user-avatar-img" (click)="fileInput.click()"/>
+        <button class="update-avt-btn" (click)="handleUpdateAvatar()">Update</button>
+    </div>
+
+</p-dialog>
