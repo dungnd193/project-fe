@@ -1,0 +1,42 @@
+<form class="login-form" [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+  <mat-form-field class="login-form__field" appearance="fill">
+    <mat-label>Username</mat-label>
+    <input
+      type="text"
+      matInput
+      required
+      formControlName="username"
+      autocomplete="off"
+    />
+    <mat-error
+      *ngIf="formLogin.get('username')?.invalid
+    || formLogin.get('username')?.errors?.['required']
+    || formLogin.get('username')?.touched"
+    >
+      Username is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="login-form__field" appearance="fill">
+    <mat-label>Password</mat-label>
+    <input
+      [type]="!showPassword ? 'password' : 'text'"
+      matInput
+      required
+      formControlName="password"
+    />
+    <mat-icon matSuffix (click)="showPassword = !showPassword">
+      {{ showPassword ? "visibility_off" : "visibility" }}
+    </mat-icon>
+    <mat-error
+      *ngIf="formLogin.get('password')?.invalid
+    || formLogin.get('password')?.errors?.['required']
+    || formLogin.get('password')?.touched"
+    >
+      Password is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-checkbox>Remember me</mat-checkbox>
+  <div class="login-form__button">
+    <button mat-raised-button type="submit">Log in</button>
+  </div>
+</form>

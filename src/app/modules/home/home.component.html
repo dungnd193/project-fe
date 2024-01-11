@@ -1,0 +1,387 @@
+<div class="banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="banner-text">
+          <h2 class="banner-text__heading">Mùa mới</h2>
+          <h2 class="banner-text__heading">Bộ sưu tập thương hiệu mới</h2>
+          <p class="banner-text__description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do et
+            dolore magna aliqua. Ipsum.
+          </p>
+          <button class="banner-text__button" routerLink="/shop">
+            MUA HÀNG NGAY
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <p-carousel
+          [value]="banner"
+          styleClass="custom-carousel"
+          [numVisible]="1"
+          [numScroll]="1"
+          [circular]="true"
+          [autoplayInterval]="3000"
+          [responsiveOptions]="responsiveOptionsBanner"
+        >
+          <ng-template let-banner pTemplate="item">
+            <div class="product-item">
+              <div
+                class="product-item-content"
+                style="border: none; padding: 0; padding-top: 4rem"
+              >
+                <div class="mb-3">
+                  <img
+                    [src]="banner"
+                    class="product-image"
+                    style="width: 100%"
+                  />
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-aos="fade-up" data-aos-duration="1000" class="benefit">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="benefit__block">
+          <div class="benefit__block-icon">
+            <mat-icon>local_shipping</mat-icon>
+          </div>
+          <h3 class="benefit__block-heading">Miễn phí vận chuyển đơn hàng từ 100$</h3>
+          <div class="benefit__block-description">
+            Lorem ipsum dolor sit amet, consectet adipiscing elit, sed do
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 mtb-60-mobile">
+        <div class="benefit__block">
+          <div class="benefit__block-icon" style="background-color: #34c4ff">
+            <mat-icon>today</mat-icon>
+          </div>
+          <h3 class="benefit__block-heading">Đổi trả hàng miễn phí trong 30 ngày</h3>
+          <div class="benefit__block-description">
+            Lorem ipsum dolor sit amet, consectet adipiscing elit, sed do
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="benefit__block">
+          <div class="benefit__block-icon" style="background-color: #fe3e57">
+            <mat-icon>headset_mic</mat-icon>
+          </div>
+          <h3 class="benefit__block-heading">Dịch vụ hỗ trợ khách hàng mọi lúc 24/7</h3>
+          <div class="benefit__block-description">
+            Lorem ipsum dolor sit amet, consectet adipiscing elit, sed do
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-aos="fade-up" data-aos-duration="1000" class="top-categories">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="top-categories__header">
+          <h2 class="top-categoriest__title">Danh mục hàng đầu</h2>
+          <p class="top-categoriest__description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmo tempor ut labore et dolore aliqua.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="top-categories__details" routerLink="/shop">
+          <img
+            src="../../assets/img/home-thumbnail-1.jpeg"
+            alt=""
+            class="top-categories__details-img"
+          />
+          <div class="top-categories__details-group">
+            <h3 class="top-categories__details-title" style="color: #5800e4">
+              Giảm giá lên đến 40%
+            </h3>
+            <h3 class="top-categories__details-cate">Giày dép & trang sức</h3>
+            <p class="top-categories__details-more">Khám phá thêm</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="top-categories__details" routerLink="/shop">
+          <img
+            src="../../assets/img/home-thumbnail-2.jpeg"
+            alt=""
+            class="top-categories__details-img"
+          />
+          <div class="top-categories__details-group">
+            <h3 class="top-categories__details-title" style="color: #608300">
+              New Arrival
+            </h3>
+            <h3 class="top-categories__details-cate">Quần áo & Phụ kiện</h3>
+            <p class="top-categories__details-more">Khám phá thêm</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="top-categories__details" routerLink="/shop">
+          <img
+            src="../../assets/img/home-thumbnail-3.jpeg"
+            alt=""
+            class="top-categories__details-img"
+          />
+          <div class="top-categories__details-group">
+            <h3 class="top-categories__details-title" style="color: #ffb534">
+              Trending Now
+            </h3>
+            <h3 class="top-categories__details-cate">Thời trang nam</h3>
+            <p class="top-categories__details-more">Khám phá thêm</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="top-categories__details" routerLink="/shop">
+          <img
+            src="../../assets/img/home-thumbnail-4.jpeg"
+            alt=""
+            class="top-categories__details-img"
+          />
+          <div class="top-categories__details-group">
+            <h3 class="top-categories__details-title" style="color: #34c3ff">
+              Hot Collection
+            </h3>
+            <h3 class="top-categories__details-cate">Thời trang nữ</h3>
+            <p class="top-categories__details-more">Khám phá thêm</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-aos="fade-up" data-aos-duration="1000" class="trending-fashion">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 pt-120 pt-30-mobile tx-alg-c">
+        <div class="trending-fashion__video-block">
+          <iframe
+            width="480"
+            height="480"
+            src="https://www.youtube.com/embed/AXOfw9x-hVw"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <img
+            src="./assets/img/play-btn.png"
+            alt=""
+            class="trending-fashion__play-btn"
+          />
+        </div>
+      </div>
+      <div class="col-lg-6 pt-80 pt-20-mobile tx-alg-c">
+        <h4 class="trending-fashion__title">Bộ sưu tập thu đông giảm 20%</h4>
+        <h3 class="trending-fashion__heading">Xu hướng thời trang</h3>
+        <p class="trending-fashion__description">
+          Lorem ipsum dolor sit amet, consectetur apiscing elit, sed do eiusmod
+          temp incididunt ut labore et dolore magna aliqua consectetur
+          adipiscing elit, sedu do eiusmod temp indidunt ut labore et dolore
+          magna aliqua.
+        </p>
+        <button class="trending-fashion__description-button">Tìm hiểu ngay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-aos="fade-up" data-aos-duration="1000" class="trending-product">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="trending-product__header">
+          <h2 class="trending-product__title">Sản phẩm xu hướng</h2>
+          <p class="trending-product__description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmo tempor ut labore et dolore aliqua.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Trending products  -->
+    <div class="row">
+      <div class="col-12">
+        <p-carousel
+          [value]="products"
+          styleClass="custom-carousel"
+          [numVisible]="3"
+          [numScroll]="1"
+          [circular]="true"
+          [autoplayInterval]="3000"
+          [responsiveOptions]="responsiveOptionsTrending"
+          [showIndicators]="false"
+        >
+          <ng-template let-product pTemplate="item">
+            <div class="product-item">
+              <div class="product-item-content">
+                <div class="mb-3" [routerLink]="['/product', product.id]">
+                  <img
+                    [src]="
+                      'http://localhost:8080/images/product-images/' + product.nameUrlImage[0]
+                    "
+                    [alt]="product.name"
+                    width="100"
+                    class="product-image"
+                  />
+                </div>
+                <div>
+                  <h4 class="mb-1 px-2 product-item-name">
+                    {{ product.name }}
+                  </h4>
+                  <h4 class="mt-0 mb-3">
+                    {{ product.price | currency: "VND" }}
+                  </h4>
+                  <span [class]="'product-badge status-' + 'instock'">{{
+                    "CÒN HÀNG"
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-aos="fade-up" data-aos-duration="1000" class="deal">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6"></div>
+      <div class="col-lg-6">
+        <div class="deal__block">
+          <h3 class="deal__title">Phong cách thời trang</h3>
+          <h2 class="deal__heading">Ưu đãi</h2>
+          <div class="deal__time">
+            <div class="deal__time-block">
+              <h3 class="deal__time-number">{{ days }}</h3>
+              <h3 class="deal__time-text">Ngày</h3>
+            </div>
+            <div class="deal__time-block">
+              <h3 class="deal__time-number">{{ hours }}</h3>
+              <h3 class="deal__time-text">Giờ</h3>
+            </div>
+            <div class="deal__time-block">
+              <h3 class="deal__time-number">{{ minitues }}</h3>
+              <h3 class="deal__time-text">Phút</h3>
+            </div>
+            <div class="deal__time-block">
+              <h3 class="deal__time-number">{{ seconds }}</h3>
+              <h3 class="deal__time-text">Giây</h3>
+            </div>
+          </div>
+          <button routerLink="/shop" class="deal__button">MUA SẮM NGAY</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-aos="fade-up" data-aos-duration="1000" class="blog">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="blog__header">
+          <h2 class="blog__title">CÁC BÀI VIẾT MỚI</h2>
+          <p class="blog__description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmo tempor ut labore et dolore aliqua.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="blog__block">
+          <img src="./assets/img/blog-img-1.jpeg" alt="" class="blog__img" />
+          <div class="blog__info">
+            <div class="blog__details">
+              <div class="blog__author">
+                <i class="far fa-user"></i>
+                <h3>By Admin</h3>
+              </div>
+              <div class="blog__time">
+                <i class="far fa-clock"></i>
+                <h3>10 January, 2020</h3>
+              </div>
+            </div>
+            <h3 class="blog__heading">
+              Our Apps User Use Mobile On His Mobile
+            </h3>
+            <div class="blog__more">
+              <h3>Đọc thêm</h3>
+              <i class="fas fa-long-arrow-alt-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="blog__block">
+          <img src="./assets/img/blog-img-2.jpeg" alt="" class="blog__img" />
+          <div class="blog__info">
+            <div class="blog__details">
+              <div class="blog__author">
+                <i class="far fa-user"></i>
+                <h3>By Admin</h3>
+              </div>
+              <div class="blog__time">
+                <i class="far fa-clock"></i>
+                <h3>10 January, 2020</h3>
+              </div>
+            </div>
+            <h3 class="blog__heading">
+              Our Apps User Use Mobile On His Mobile
+            </h3>
+            <div class="blog__more">
+              <h3>Đọc thêm</h3>
+              <i class="fas fa-long-arrow-alt-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="blog__block">
+          <img src="./assets/img/blog-img-3.jpeg" alt="" class="blog__img" />
+          <div class="blog__info">
+            <div class="blog__details">
+              <div class="blog__author">
+                <i class="far fa-user"></i>
+                <h3>By Admin</h3>
+              </div>
+              <div class="blog__time">
+                <i class="far fa-clock"></i>
+                <h3>10 January, 2020</h3>
+              </div>
+            </div>
+            <h3 class="blog__heading">
+              Our Apps User Use Mobile On His Mobile
+            </h3>
+            <div class="blog__more">
+              <h3>Đọc thêm</h3>
+              <i class="fas fa-long-arrow-alt-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

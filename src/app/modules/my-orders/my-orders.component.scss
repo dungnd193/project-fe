@@ -1,0 +1,197 @@
+.my-oder-container {
+    margin: 30px auto;
+    width: 840px;
+}
+
+.my-order-block {
+    padding: 12px 24px;
+}
+
+.my-order-block-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+:host ::ng-deep {
+    .p-tabview .p-tabview-panels {
+        padding: 0rem;
+    }
+
+    .p-tabview .p-tabview-nav {
+        width: 100%;
+    }
+
+    .p-tabview .p-tabview-nav li {
+        width: 20%;
+    }
+
+    .p-tabview-nav-link {
+        display: flex;
+        justify-content: center;
+    }
+
+    .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+        box-shadow: none;
+    }
+
+    .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+        border-color: #fe3e57;
+    }
+
+    .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link .p-tabview-title {
+        color: #fe3e57 !important;
+    }
+
+    .p-tabview-title {
+        color: #000000DE;
+        font-weight: 400;
+    }
+}
+
+.separate {
+    height: 1px;
+    background-color: #00000017;
+    margin: 0 24px;
+}
+
+.dash {
+    height: 1px;
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.5);
+    margin: 0 24px;
+}
+
+.my-order-item {
+    // background: lightgray;
+    border-radius: 8px;
+    margin: 6px 0;
+    margin-bottom: 24px;
+    border: 1px solid lightgray;
+}
+
+.my-order-item-group {
+    padding: 12px 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.my-order-item-left {
+    display: flex;
+}
+
+.my-order-item-left-img {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    border: 1px solid #e1e1e1;
+    background: #e1e1e1;
+}
+
+.my-order-item-left-group {
+    padding-left: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-info {
+    font-size: 16px;
+    color: #000000DE;
+}
+
+.text-info-2 {
+    font-size: 16px;
+    color: #737373de;
+}
+
+.text-quantity {
+    font-size: 14px;
+    color: #737373de;
+}
+
+.\-78s2g,
+.total,
+.discount {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 24px 24px 12px;
+}
+
+.IlORNJ {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    margin: 0 5px 0 0;
+    line-height: 0;
+}
+
+._0NMXyN {
+    margin: 0 10px 0 0;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, .8);
+}
+
+.DeWpya {
+    color: #fe3e57;
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.button-group {
+    padding: 0 24px;
+    text-align: right;
+    padding-bottom: 24px;
+}
+
+.btn-action {
+    color: white;
+    font-size: 14px;
+    background-color: #fe3e57;
+    padding: 10px 24px;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    outline: none;
+    width: 140px;
+    text-align: center;
+}
+
+.no-order {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.FK6kaK {
+    border-radius: 0.125rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: #fff;
+}
+
+.bi4dk5 {
+    background-position: 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 100px;
+    background-image: url('https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/orderlist/5fafbb923393b712b96488590b8f781f.png');
+}
+
+.dYtuu1 {
+    margin: 20px 0 0;
+    font-size: 18px;
+    line-height: 1.4;
+    color: rgba(0,0,0,.8);
+    font-weight: 400;
+    text-align: center;
+}

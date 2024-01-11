@@ -1,0 +1,163 @@
+<div class="container">
+  <div class="product">
+    <div class="row">
+      <div class="col-md-6">
+        <p-galleria [showItemNavigators]="true" [showThumbnailNavigators]="false"
+          [responsiveOptions]="responsiveOptions" [value]="thumbnailImgList" thumbnailsPosition="left" [numVisible]="4"
+          [containerStyle]="{ 'max-width': '100%' }" [circular]="true" [autoPlay]="true" [transitionInterval]="2000"
+          [showThumbnails]="false">
+          <ng-template pTemplate="item" let-item>
+            <img class="img-item" [src]="'http://localhost:8080/images/product-images/' + item" alt="img"
+              style="width: 100%; display: block" />
+          </ng-template>
+          <ng-template pTemplate="thumbnail" let-item>
+            <div class="grid grid-nogutter justify-content-center">
+              <img class="img-thumbnail" [src]="'http://localhost:8080/images/product-images/' + item" alt="img" />
+            </div>
+          </ng-template>
+        </p-galleria>
+      </div>
+      <div class="col-md-6">
+        <form class="product-info" [formGroup]="productInfo">
+          <h3 class="product-info__name">{{ product.name }}</h3>
+          <div class="product-info__cost">
+            <div class="product-info__cost-text">
+              <span class="product-info__cost-text-new">
+                {{
+                0.01 * (100 - product.discount!) * product.price!
+                | currency: "VND"
+                }}
+              </span>
+              <span class="product-info__cost-text-old" *ngIf="product.discount! > 0" [style.textDecoration]="
+                  product.discount! > 0 ? 'line-through' : 'none'
+                ">
+                ({{ product.price | currency: "VND" }})
+              </span>
+            </div>
+            <div class="product-info__cost-rating">
+              <!-- <p-rating
+                [readonly]="true"
+                [stars]="5"
+                [cancel]="false"
+              ></p-rating> -->
+              <i class="pi pi-eye"></i>
+              {{ product.viewCount }} lượt xem
+            </div>
+          </div>
+          <div class="product-info__description">
+            <h3 class="product-info__title">Mô tả sản phẩm:</h3>
+            <p class="product-info__description-text">
+              {{ product.description }}
+            </p>
+          </div>
+          <div class="product-info__color">
+            <h3 class="product-info__title">Màu sắc</h3>
+            <div class="product-info__group">
+              <div class="field-color-checkbox">
+                <ng-container *ngFor="let item of product.quantity">
+                  <mat-radio-group formControlName="colorNSize" name="colors">
+                    <mat-radio-button [value]="{ colorId: item.colorId, sizeId: item.sizeId }">
+                      <div class="product-info__color-item" [style.background]="item.colorCode"></div>
+                      {{ item.colorName }} ({{ item.sizeName }})
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="product-info__category">
+            <div class="row">
+              <div class="col-4">
+                <h3 class="product-info__title">Danh mục:</h3>
+              </div>
+              <div class="col-8">
+                <h3 class="product-info__category-detail">
+                  {{ product.category?.name }}
+                </h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <h3 class="product-info__title">Mã SP:</h3>
+              </div>
+              <div class="col-8">
+                <h3 class="product-info__category-detail">
+                  {{ product.code }}
+                </h3>
+              </div>
+            </div>
+          </div>
+          <button (click)="handleAddProduct()" class="product-add-btn">
+            Thêm vào giỏ hàng
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="review">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="review-container">
+          <h3 class="review-text">ĐÁNH GIÁ SẢN PHẨM</h3>
+          <div class="review-group" *ngFor="let review of reviewList">
+            <img [src]="'http://localhost:8080/images/user-avatar/' + review.avatarPath" alt="avt" class="user-review-avt">
+            <div class="review-user-info">
+              <h3 class="username">{{review.username}}</h3>
+              <p-rating class="review-user-rate" [ngModel]="review.rate" [stars]="5" [cancel]="false" [readonly]="true"></p-rating>
+              <h3 class="review-time">{{handleDateReview(review.createdAt)}}</h3>
+              <p class="review-user-desc">{{review.message}}</p>
+            </div>
+          </div>
+          <div *ngIf="!reviewList.length">Sản phẩm này chưa có đánh giá</div>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="formFeedback" (ngSubmit)="handleAddReview()" class="my-review" *ngIf="reviewPermission">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="my-review__heading">Thêm đánh giá của bạn</h3>
+          <div class="my-review__rating">
+            <h3 class="my-review__rating-text">Đánh giá</h3>
+            <p-rating [ngModel]="4" [stars]="5" [cancel]="false" formControlName="rate"></p-rating>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- <div class="col-md-6">
+          <span class="p-float-label">
+            <input
+              id="float-input"
+              type="text"
+              pInputText
+              placeholder="Username"
+              autocomplete="off"
+              formControlName="username"
+            />
+          </span>
+        </div>
+        <div class="col-md-6">
+          <span class="p-float-label">
+            <input
+              id="float-input"
+              type="text"
+              pInputText
+              placeholder="E-mail address"
+              autocomplete="off"
+              formControlName="email"
+            />
+          </span>
+        </div> -->
+        <div class="col-md-12">
+          <span class="p-float-label">
+            <textarea inputId="textarea" rows="3" style="resize: none" cols="30" pInputTextarea
+              placeholder="Describe yourself here..." autocomplete="off" formControlName="message"></textarea>
+          </span>
+        </div>
+        <div class="col-md-12">
+          <button type="submit" class="my-review__btn">Đánh giá</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

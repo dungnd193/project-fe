@@ -1,0 +1,224 @@
+<div class="container">
+  <div class="shop">
+    <div class="row">
+      <div class="col-3">
+        <div class="side-bar">
+          <div class="side-bar__filter">
+            <h3 class="side-bar__filter-title">Lọc theo giá</h3>
+            <p-slider [(ngModel)]="rangeValues" [range]="true"></p-slider>
+            <div class="side-bar__filter-price-info">
+              <h3 class="side-bar__filter-price-range">
+                Từ {{ rangeValues[0] * priceUnit | currency : "VND" }} -
+                {{ rangeValues[1] * priceUnit | currency : "VND" }}
+              </h3>
+              <button
+                pButton
+                pRipple
+                type="button"
+                label="Lọc"
+                class="p-button-raised side-bar__filter-price-btn"
+                (click)="handleFilterByPrice()"
+              ></button>
+            </div>
+          </div>
+          <div class="side-bar__filter">
+            <h3 class="side-bar__filter-title">Lọc theo màu sắc</h3>
+            <mat-radio-group name="color-filter">
+              <ul class="side-bar__filter-color">
+                <ng-container
+                  *ngFor="let item of colorFilterList; let idx = index"
+                >
+                  <mat-radio-button
+                    (change)="handleFilterByColors($event)"
+                    *ngIf="isShowAllCategories ? isShowAllCategories : idx <= 5"
+                    [value]="item.id"
+                  >
+                    <li class="side-bar__filter-color-item">
+                      <span class="side-bar__filter-color-title">
+                        {{ item.name }}
+                      </span>
+                      <span
+                        class="side-bar__filter-color-background"
+                        [style.backgroundColor]="item.code"
+                        [style.border]="
+                          item.code === '#FFFFFF' ? '1px solid #ccc' : ''
+                        "
+                      >
+                      </span>
+                    </li>
+                  </mat-radio-button>
+                </ng-container>
+              </ul>
+              <span
+                class="side-bar__filter-show-more"
+                (click)="handleShowMoreCategories()"
+              >
+                Hiển thị {{ isShowAllCategories ? "bớt" : "thêm" }}
+              </span>
+            </mat-radio-group>
+          </div>
+          <div class="side-bar__filter">
+            <h3 class="side-bar__filter-title">Lọc theo danh mục</h3>
+            <mat-radio-group name="category-filter">
+              <ul class="side-bar__filter-category">
+                <mat-radio-button
+                  (change)="handleFilterByCategories($event)"
+                  *ngFor="let item of categoryFilterList"
+                  [value]="item.id"
+                >
+                  <li class="side-bar__filter-category-item">
+                    <span>
+                      {{ item.name }}
+                    </span>
+                  </li>
+                </mat-radio-button>
+              </ul>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="shop-content">
+          <p-dataView
+            #dataView
+            [value]="products"
+            [rows]="6"
+            filterBy="name"
+            [sortField]="sortField"
+            [sortOrder]="sortOrder"
+            layout="grid"
+          >
+            <ng-template pTemplate="header">
+              <div
+                class="flex flex-column md:flex-row md:justify-content-between"
+              >
+                <p-dropdown
+                  [options]="sortOptions"
+                  [(ngModel)]="sortKey"
+                  placeholder="Sắp xếp theo Giá"
+                  (onChange)="handleSortByOrder($event)"
+                  styleClass="p-mb-2 p-mb-md-0"
+                ></p-dropdown>
+                <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                  <i class="pi pi-search"></i>
+                  <input
+                    type="search"
+                    pInputText
+                    placeholder="Tìm kiếm theo tên"
+                    (input)="handleFilterByName($event)"
+                  />
+                </span>
+                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+              </div>
+            </ng-template>
+            <ng-template let-product pTemplate="listItem">
+              <div class="col-12">
+                <div class="product-list-item">
+                  <img
+                    [src]="
+                      'http://localhost:8080/images/product-images/' + product.nameUrlImage[0]
+                    "
+                    [alt]="product.name"
+                    [style.cursor]="'pointer'"
+                    [routerLink]="['/product', product.id]"
+                  />
+                  <div class="product-list-detail">
+                    <div
+                      class="product-name"
+                      [style.cursor]="'pointer'"
+                      [routerLink]="['/product', product.id]"
+                    >
+                      {{ product.name }}
+                    </div>
+                    <div class="product-description">
+                      {{ product.description }}
+                    </div>
+                    <span
+                      class="product-category"
+                      style="text-transform: capitalize"
+                    >
+                      {{ product.category.name }}
+                    </span>
+                  </div>
+                  <div class="product-list-action">
+                    <span class="product-price">
+                      {{ product.price | currency : "VND" }}
+                    </span>
+                    <p-button
+                      icon="pi pi-shopping-cart"
+                      label="Thêm vào giỏ hàng"
+                      (Click)="handleAddProductToCart(product)"
+                      [disabled]="product.status === 'OUTOFSTOCK'"
+                    ></p-button>
+                    <span [class]="'product-badge status-' + 'instock'">
+                      {{ "INSTOCK" }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template let-product pTemplate="gridItem">
+              <div class="p-col-12 md:col-6">
+                <div class="product-grid-item card">
+                  <div class="product-grid-item-top">
+                    <div>
+                      <i class="pi pi-tag product-category-icon"></i>
+                      <span
+                        class="product-category"
+                        style="text-transform: capitalize"
+                      >
+                        {{ product.category.name }}
+                      </span>
+                    </div>
+                    <span [class]="'product-badge status-' + 'instock'">{{
+                      "INSTOCK"
+                    }}</span>
+                  </div>
+                  <div class="product-grid-item-content">
+                    <img
+                      [src]="
+                        'http://localhost:8080/images/product-images/' +
+                        product.nameUrlImage[0]
+                      "
+                      [alt]="product.name"
+                      [routerLink]="['/product', product.id]"
+                      style="cursor: pointer"
+                    />
+                    <div
+                      class="product-name"
+                      [routerLink]="['/product', product.id]"
+                      style="cursor: pointer"
+                    >
+                      {{ product.name }}
+                    </div>
+                    <div class="product-description">
+                      {{ product.description }}
+                    </div>
+                  </div>
+                  <div class="product-grid-item-bottom">
+                    <span class="product-price">
+                      {{ product.price | currency : "VND" }}
+                    </span>
+                    <p-button
+                      icon="pi pi-shopping-cart"
+                      (click)="handleAddProductToCart(product)"
+                      [disabled]="product.status === 'OUTOFSTOCK'"
+                    ></p-button>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dataView>
+          <p-paginator
+            #paginator
+            [rows]="6"
+            [totalRecords]="totalProducts"
+            (onPageChange)="paginate($event)"
+            [first]="2"
+          ></p-paginator>
+          <!-- [pageLinkSize]="this.page" -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,251 @@
+<div class="content">
+  <div class="container">
+    <div *ngIf="checkoutService.isOrderSuccess" class="order-completed">
+      <img
+        class="order-completed__img"
+        src="../../../assets/img/order.jpg"
+        alt=""
+      />
+      <h3 class="order-completed__title">Đơn hàng của bạn đã hoàn tất!</h3>
+      <h3 class="order-completed__description">
+        Bạn sẽ nhận được email xác nhận với chi tiết đơn hàng
+      </h3>
+    </div>
+    <form
+      action=""
+      [formGroup]="formContact"
+      (ngSubmit)="handleOrder()"
+      class="form-checkout"
+      *ngIf="!checkoutService.isOrderSuccess"
+    >
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="contact-information">
+            <div class="row">
+              <div class="col-12">
+                <h2 class="contact-information__title">Thông tin liên lạc</h2>
+              </div>
+              <div class="col-12">
+                <div class="contact-information__block">
+                  <h3 class="contact-information__heading">
+                    Họ và Tên<span style="color: red">*</span>
+                  </h3>
+                  <input
+                    autocomplete="off"
+                    type="text"
+                    class="contact-information__input"
+                    placeholder="Name"
+                    formControlName="user_name"
+                  />
+                  <p
+                    style="color: red"
+                    *ngIf="(formContact.get('user_name')?.invalid || formContact.get('user_name')?.errors?.['required']) && (formContact.get('user_name')?.dirty || formContact.get('user_name')?.touched)"
+                  >
+                    Không để trống trường này!
+                  </p>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="contact-information__block">
+                  <h3 class="contact-information__heading">
+                    Địa chỉ<span style="color: red">*</span>
+                  </h3>
+                  <input
+                    autocomplete="off"
+                    type="text"
+                    class="contact-information__input"
+                    placeholder="Address"
+                    formControlName="address"
+                  />
+                  <p
+                    style="color: red"
+                    *ngIf="(formContact.get('address')?.invalid || formContact.get('address')?.errors?.['required']) && (formContact.get('address')?.dirty || formContact.get('address')?.touched)"
+                  >
+                    Không để trống trường này!
+                  </p>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="contact-information__block">
+                  <h3 class="contact-information__heading">
+                    Mã bưu điện<span style="color: red">*</span>
+                  </h3>
+                  <input
+                    autocomplete="off"
+                    type="text"
+                    class="contact-information__input"
+                    placeholder="Postcode/Zip"
+                    formControlName="postcode"
+                  />
+                  <p
+                    style="color: red"
+                    *ngIf="(formContact.get('postcode')?.invalid || formContact.get('postcode')?.errors?.['required']) && (formContact.get('postcode')?.dirty || formContact.get('postcode')?.touched)"
+                  >
+                    Không để trống trường này!
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="contact-information__block">
+                  <h3 class="contact-information__heading">
+                    Số điện thoại<span style="color: red">*</span>
+                  </h3>
+                  <input
+                    autocomplete="off"
+                    type="text"
+                    class="contact-information__input"
+                    placeholder="Phone"
+                    formControlName="phone"
+                  />
+                  <p
+                    style="color: red"
+                    *ngIf="(formContact.get('phone')?.invalid || formContact.get('phone')?.errors?.['required']) && (formContact.get('phone')?.dirty || formContact.get('phone')?.touched)"
+                  >
+                    Không để trống trường này!
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="contact-information__block">
+                  <h3 class="contact-information__heading">
+                    Địa chỉ email<span style="color: red">*</span>
+                  </h3>
+                  <input
+                    autocomplete="off"
+                    type="text"
+                    class="contact-information__input"
+                    placeholder="Mail"
+                    formControlName="email"
+                  />
+                  <p
+                    style="color: red"
+                    *ngIf="(formContact.get('email')?.invalid || formContact.get('email')?.errors?.['email']) && (formContact.get('email')?.dirty || formContact.get('email')?.touched)"
+                  >
+                    Hãy nhập đúng định dạng email!
+                  </p>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="contact-information__block">
+                  <h3 class="contact-information__heading">
+                    Ghi chú (tuỳ chọn)
+                  </h3>
+                  <textarea
+                    style="resize: none"
+                    rows="5"
+                    type="text"
+                    class="contact-information__input"
+                    placeholder=""
+                    formControlName="note"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="row">
+            <div class="your-order">
+              <div class="col-12" style="text-align: center">
+                <h3 class="your-order__title">Đơn hàng của bạn</h3>
+              </div>
+              <div class="col-12">
+                <div class="your-order__block">
+                  <div class="your-order__heading">
+                    <span class="your-order__heading-text">Sản phẩm</span>
+                  </div>
+                  <div style="margin: 10px 0">
+                    <div
+                      *ngFor="let product of cartProductList"
+                      class="your-order__product"
+                    >
+                      <span class="your-order__product-name">
+                        {{ product.name }}
+                      </span>
+                      <span class="your-order__product-price">
+                        {{ product.price | currency : "VND" }} x
+                        {{ product.quantity }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="your-order__block">
+                  <div class="your-order__heading">
+                    <span class="your-order__heading-text">Giá</span>
+                    <span class="your-order__heading-price">
+                      {{ subTotal | currency : "VND" }}
+                    </span>
+                  </div>
+                </div>
+                <div class="your-order__block">
+                  <div class="your-order__heading">
+                    <span class="your-order__heading-text">Vận chuyển</span>
+                    <span class="your-order__heading-price">
+                      {{ 0 | currency : "VND" }}
+                    </span>
+                  </div>
+                </div>
+                <div class="your-order__block">
+                  <div class="your-order__heading">
+                    <span class="your-order__heading-text">Voucher</span>
+                    <span class="your-order__heading-price">
+                      <span *ngIf="discount">-</span>
+                      {{ discount * subTotal | currency : "VND" }}
+                    </span>
+                  </div>
+                </div>
+                <div class="your-order__block">
+                  <div class="your-order__heading">
+                    <span class="your-order__heading-text">Tổng</span>
+                    <span
+                      class="your-order__heading-price"
+                      style="color: #fe3e57; font-weight: bold"
+                    >
+                      {{ subTotal - discount * subTotal | currency : "VND" }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-8">
+            <div class="payment-method">
+              <div class="col-12" style="text-align: center">
+                <h3 class="payment-method__title">Payment Method</h3>
+              </div>
+              <div class="col-12">
+                <mat-radio-group formControlName="payment_method">
+                  <div class="payment-method__block">
+                    <div class="payment-method__group">
+                      <mat-radio-button value="check-payment"
+                        >Check Payment</mat-radio-button
+                      >
+                    </div>
+                    <p class="payment-method__description">
+                      Lorem ipsum dolor sit amet, constetur adipiscing elit, sed
+                      do eiusmod tempor incididunt ultr.
+                    </p>
+                  </div>
+                  <div class="payment-method__block">
+                    <div class="payment-method__group">
+                      <mat-radio-button value="paypal">Paypal</mat-radio-button>
+                    </div>
+                    <p class="payment-method__description">
+                      Lorem ipsum dolor sit amet, constetur adipiscing elit, sed
+                      do eiusmod tempor incididunt ultr.
+                    </p>
+                  </div>
+                </mat-radio-group>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="payment-method__btn">
+                  PLACE ORDER
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
